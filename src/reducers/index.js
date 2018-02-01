@@ -89,10 +89,22 @@ export const getAttachments = wrap(
 	state => state.attachment
 );
 
+import page, * as fromPage from "./page";
+
+export const getPageById = wrap(fromPage.getPageById, state => state.page);
+export const getPages = wrap(fromPage.getPages, state => state.page);
+
+import post, * as fromPost from "./post";
+
+export const getPostById = wrap(fromPost.getPostById, state => state.post);
+export const getPosts = wrap(fromPost.getPosts, state => state.post);
+
 export default combineReducers({
 	routing: routerReducer,
 	burgerMenu,
 	navigation,
 	authentication,
-	attachment
+	attachment,
+	page,
+	post
 });

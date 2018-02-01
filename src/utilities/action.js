@@ -37,7 +37,7 @@ export const createFetchSingleItemThunk = (
 	return fetchApi(endpoint(itemId, args), {
 		method: "GET"
 	})
-		.then(({ data: item }) => {
+		.then(item => {
 			const mappedItem = mapItem(item);
 
 			dispatch(action(false, null, itemId, mappedItem));
@@ -83,7 +83,9 @@ export const createFetchItemsPageThunk = (
 ) => (page = 1, pageTo = -1, args = {}) =>
 	fetchApi(endpoint(page, args), {
 		method: "GET"
-	}).then(({ data: items, from, to, path, total, per_page: perPage }) => {
+	}).then(items => {
+		return false;
+
 		const mappedItems = items.map(mapItem);
 		dispatch(action(false, null, mappedItems));
 
@@ -166,7 +168,7 @@ export const createCreateItemThunk = (
 		method: "POST",
 		body: JSON.stringify(item)
 	})
-		.then(({ data: item }) => {
+		.then(item => {
 			const mappedItem = mapItem(item);
 
 			dispatch(action(false, null, mappedItem));
@@ -214,7 +216,7 @@ export const createUpdateItemThunk = (
 			Authorization: "Bearer " + token
 		})
 	})
-		.then(({ data: item }) => {
+		.then(item => {
 			const mappedItem = mapItem(item);
 
 			dispatch(action(false, null, itemId, mappedItem));

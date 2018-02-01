@@ -23,10 +23,6 @@ export const fetchApi = (url, options) => {
 		options.headers.append("Content-Type", "application/json");
 	}
 
-	if (!options.headers.get("X-Requested-With")) {
-		options.headers.append("X-Requested-With", "XMLHttpRequest");
-	}
-
 	if (!options.headers.get("Authorization") && token) {
 		options.headers.append("Authorization", "Bearer " + token);
 	}

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import { fetch as fetchThumbnail } from "actions/attachments";
+import { fetch as fetchThumbnail } from "actions/attachment";
 
 import { getAttachmentById } from "reducers";
 
@@ -39,7 +39,7 @@ class Thumbnail extends React.PureComponent {
 	};
 
 	render = () => {
-		const { id, thumbnail, size = "feuerschutz_fix_width" } = this.props;
+		const { id, thumbnail, size = "medium_large" } = this.props;
 		const { fetched, error } = this.state;
 
 		const thumbnailUrl =
@@ -71,7 +71,7 @@ class Thumbnail extends React.PureComponent {
 						/>
 					)}
 
-				{!show && <Placeholder block error={error} />}
+				{!show && <Placeholder height={8} error={error} />}
 			</StyledThumbail>
 		);
 	};

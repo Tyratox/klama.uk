@@ -8,9 +8,9 @@ import { Flex, Box } from "grid-styled";
 
 import { colors, media } from "utilities/style";
 
-import InstagramIcon from "react-icons/lib/fa/instagram";
-import FacebookIcon from "react-icons/lib/fa/facebook";
-import ContactIcon from "react-icons/lib/md/comment";
+import InstagramIcon from "react-icons/lib/io/social-instagram-outline";
+import FacebookIcon from "react-icons/lib/io/social-facebook";
+import ContactIcon from "react-icons/lib/io/android-chat";
 
 const FooterWrapper = styled.footer`
 	background-color: ${colors.primary};
@@ -64,13 +64,11 @@ class Footer extends React.PureComponent {
 							<FooterTitle>Social Media</FooterTitle>
 							<FooterList>
 								<li>
-									<a href="" target="_blank">
+									<a
+										href="https://www.instagram.com/klamauker/"
+										target="_blank"
+									>
 										<InstagramIcon />Instagram
-									</a>
-								</li>
-								<li>
-									<a href="" target="_blank">
-										<FacebookIcon />Facebook
 									</a>
 								</li>
 							</FooterList>
@@ -89,7 +87,7 @@ class Footer extends React.PureComponent {
 											"@klama.uk";
 									}}
 								>
-									<ContactIcon />Schreib uns eine E-Mail
+									<ContactIcon />Schreib uns!
 								</li>
 							</FooterList>
 						</Box>

@@ -4,10 +4,11 @@ import { colors, shadows } from "utilities/style";
 
 const Navbar = styled.div`
 	position: relative;
-	background-color: ${colors.primary};
-	color: ${colors.primaryContrast};
+	background-color: ${colors.primaryContrast};
+	color: ${colors.primary};
 	box-shadow: ${shadows.y};
 	padding: 1rem 0;
+	height: 2rem;
 `;
 
 export default Navbar;

@@ -6,6 +6,7 @@ import { colors } from "utilities/style";
 const NavItem = styled.div`
 	position: relative;
 
+	height: 100%;
 	width: auto;
 	margin-right: 0.75rem;
 	padding-right: 0.8rem;

@@ -7,8 +7,9 @@ import { decorator as reduxBurgerMenu } from "redux-burger-menu";
 import Link from "components/Link";
 
 import HomeIcon from "react-icons/lib/fa/home";
-import CartIcon from "react-icons/lib/fa/shopping-cart";
-import CheckoutIcon from "react-icons/lib/fa/money";
+import BlogIcon from "react-icons/lib/io/social-rss";
+import GroupIcon from "react-icons/lib/io/ios-people";
+import ContactIcon from "react-icons/lib/io/android-chat";
 
 import { getIsAuthenticated } from "reducers";
 import { colors } from "utilities/style";
@@ -38,19 +39,24 @@ class BurgerMenu extends React.PureComponent {
 		return (
 			<ReduxBurgerMenu right>
 				<BurgerList>
-					<BurgerItem seperator>
-						<Link to="https://feuerschutz.ch" negative flex>
-							<HomeIcon />Feed
+					<BurgerItem>
+						<Link to="/" negative flex>
+							<HomeIcon />Events
 						</Link>
 					</BurgerItem>
 					<BurgerItem>
-						<Link to="/cart" negative flex>
-							<CartIcon />x
+						<Link to="/blog" negative flex>
+							<BlogIcon />Blog
 						</Link>
 					</BurgerItem>
-					<BurgerItem seperator>
-						<Link to="/checkout" negative flex>
-							<CheckoutIcon />y
+					<BurgerItem>
+						<Link to="/about" negative flex>
+							<GroupIcon />Verein
+						</Link>
+					</BurgerItem>
+					<BurgerItem>
+						<Link to="/contact" negative flex>
+							<ContactIcon />Kontakt
 						</Link>
 					</BurgerItem>
 				</BurgerList>

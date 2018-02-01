@@ -1,10 +1,16 @@
 import { css } from "styled-components";
 
 export const colors = {
-	primary: "rgb(30, 30, 60)",
+	primaryDark: "#0B1824",
+	primary: "#24387D",
+	primaryLight: "#324C8E",
 	primaryContrast: "#ffffff",
 	background: "#f5f5f5",
 	backgroundContrast: "#ffffff",
+	accent: "#BF262E",
+	accentLight: "#DF4C44",
+	accentDark: "#821F25",
+	accent2: "#104146",
 	font: "#000000",
 	fontLight: "#444444",
 	borderLight: "#888888",

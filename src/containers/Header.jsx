@@ -18,7 +18,7 @@ import { resetJwtToken } from "actions/authentication";
 
 import { getBurgerMenuOpen } from "reducers";
 
-import { Link } from "react-router-dom";
+import Link from "components/Link";
 import Navbar from "components/Navbar";
 import Container from "components/Container";
 import Placeholder from "components/Placeholder";
@@ -26,6 +26,7 @@ import Flexbar from "components/Flexbar";
 import Push from "components/Push";
 import MediaQuery from "components/MediaQuery";
 import NavItem from "components/NavItem";
+
 import MenuIcon from "react-icons/lib/md/menu";
 
 const PreUser = styled.div`
@@ -34,8 +35,13 @@ const PreUser = styled.div`
 `;
 
 const HeaderWrapper = styled.div`
-	background-color: ${colors.primary};
-	color: #fff;
+	position: sticky;
+	top: 0;
+
+	z-index: 100;
+
+	background-color: ${colors.primaryContrast};
+	color: ${colors.primary};
 `;
 
 class Header extends React.PureComponent {
@@ -52,24 +58,50 @@ class Header extends React.PureComponent {
 		} = this.props;
 
 		return (
-			<div>
-				<HeaderWrapper>
+			<HeaderWrapper>
+				<Navbar>
 					<Container>
-						<Navbar>
-							<Flexbar>
-								<NavItem>Logo</NavItem>
-								<Push left>
-									<MediaQuery md down>
-										<NavItem onClick={toggleBurgerMenu}>
-											<MenuIcon size="25" />
-										</NavItem>
-									</MediaQuery>
-								</Push>
-							</Flexbar>
-						</Navbar>
+						<Flexbar>
+							<NavItem>
+								<img width="155" height="222" src="/img/logo-blue.svg" />
+							</NavItem>
+							<Push left>
+								<MediaQuery md up>
+									<NavItem>
+										<Link to="/">Events</Link>
+									</NavItem>
+									<NavItem>
+										<Link to="/blog">Blog</Link>
+									</NavItem>
+									<NavItem>
+										<Link to="/page/about">Verein</Link>
+									</NavItem>
+									<NavItem>
+										<Link
+											onClick={() => {
+												window.location =
+													"mailto:" +
+													"ofni"
+														.split("")
+														.reverse()
+														.join("") +
+													"@klama.uk";
+											}}
+										>
+											Kontakt
+										</Link>
+									</NavItem>
+								</MediaQuery>
+								<MediaQuery md down>
+									<NavItem onClick={toggleBurgerMenu}>
+										<MenuIcon size="25" />
+									</NavItem>
+								</MediaQuery>
+							</Push>
+						</Flexbar>
 					</Container>
-				</HeaderWrapper>
-			</div>
+				</Navbar>
+			</HeaderWrapper>
 		);
 	};
 }
