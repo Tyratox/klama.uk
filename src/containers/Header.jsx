@@ -64,7 +64,7 @@ class Header extends React.PureComponent {
 						<Flexbar>
 							<NavItem>
 								<Link to="/">
-									<img width="155" height="222" src="img/logo-blue.svg" />
+									<img width="155" height="222" src="/img/logo-blue.svg" />
 								</Link>
 							</NavItem>
 							<Push left>

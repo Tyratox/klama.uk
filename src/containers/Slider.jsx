@@ -11,7 +11,7 @@ const SliderWrapper = styled.div`
 	height: 300px;
 	max-height: 25vh;
 
-	background-image: url("img/machine-red-blue.svg");
+	background-image: url("/img/machine-red-blue.svg");
 	background-position: 50% 40%;
 	background-size: 80% auto;
 	background-repeat: no-repeat;
@@ -50,7 +50,7 @@ class Slider extends React.PureComponent {
 		return (
 			<SliderWrapper>
 				<Container>
-					<Logo src="img/logo-full-white.svg" />
+					<Logo src="/img/logo-full-white.svg" />
 				</Container>
 			</SliderWrapper>
 		);
