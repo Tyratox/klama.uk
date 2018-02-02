@@ -50,12 +50,24 @@ class BurgerMenu extends React.PureComponent {
 						</Link>
 					</BurgerItem>
 					<BurgerItem>
-						<Link to="/about" negative flex>
+						<Link to="/page/about" negative flex>
 							<GroupIcon />Verein
 						</Link>
 					</BurgerItem>
 					<BurgerItem>
-						<Link to="/contact" negative flex>
+						<Link
+							onClick={() => {
+								window.location =
+									"mailto:" +
+									"siul"
+										.split("")
+										.reverse()
+										.join("") +
+									"@luishartl.ch";
+							}}
+							negative
+							flex
+						>
 							<ContactIcon />Kontakt
 						</Link>
 					</BurgerItem>

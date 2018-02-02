@@ -30,7 +30,7 @@ export const fetchApi = (url, options) => {
 	return fetch(API_URL + url, options).then(response => {
 		return response.json().then(json => {
 			return response.ok
-				? json
+				? Promise.resolve({ response, json })
 				: Promise.reject(
 						new ApiError(
 							json.message,

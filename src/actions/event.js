@@ -7,7 +7,7 @@ import {
 
 import { fetchApi } from "utilities/api";
 
-export const itemName = "post";
+export const itemName = "event";
 
 /**
  * Maps an item so we can store it in the state
@@ -21,6 +21,14 @@ export const mapItem = ({
 	title: { rendered: title },
 	content: { rendered: content },
 	excerpt: { rendered: excerpt },
+	acf: {
+		short_description: description,
+		artists,
+		location,
+		date_from: dateFrom,
+		date_to: dateTo
+	},
+	event_type: eventTypeIds,
 	featured_media: thumbnailId
 }) => ({
 	id,
@@ -29,6 +37,18 @@ export const mapItem = ({
 	title,
 	content,
 	excerpt,
+	artists: artists.map(
+		({
+			date_from: dateFrom,
+			date_to: dateTo,
+			artist: { id, post_title: name }
+		}) => ({ id, name, dateFrom, dateTo })
+	),
+	description,
+	location,
+	dateFrom,
+	dateTo,
+	eventTypeIds,
 	thumbnailId
 });
 
@@ -42,25 +62,25 @@ export const mapItem = ({
 export const fetchItem = createFetchSingleItemAction(itemName);
 
 /**
- * Fetches a post by it's slug
- * @param {number} postSlug The slug of the post
+ * Fetches a event by it's slug
+ * @param {number} eventSlug The slug of the event
  * @return {function} The redux thunk
  */
-export const fetch = postSlug => dispatch => {
-	dispatch(fetchItem(true, null, postSlug));
+export const fetch = eventSlug => dispatch => {
+	dispatch(fetchItem(true, null, eventSlug));
 
-	return fetchApi(`/wp-json/wp/v2/posts?slug=${postSlug}`, {
+	return fetchApi(`/wp-json/wp/v2/event?slug=${eventSlug}`, {
 		method: "GET"
 	})
 		.then(({ json: items }) => {
 			if (items.length > 0) {
-				dispatch(fetchItem(false, null, postSlug, mapItem(items[0])));
+				dispatch(fetchItem(false, null, eventSlug, mapItem(items[0])));
 			} else {
-				dispatch(fetchItem(false, new Error("No post was found"), postSlug));
+				dispatch(fetchItem(false, new Error("No event was found"), eventSlug));
 			}
 		})
 		.catch(err => {
-			dispatch(fetchItem(true, err, postSlug));
+			dispatch(fetchItem(true, err, eventSlug));
 		});
 };
 
@@ -73,11 +93,11 @@ export const fetch = postSlug => dispatch => {
  */
 export const fetchItems = createFetchAllItemsAction(itemName);
 
-export const fetchLatest = postSlug => dispatch => {
+export const fetchLatest = () => dispatch => {
 	dispatch(fetchItems(true, null));
 
 	return fetchApi(
-		`/wp-json/wp/v2/posts?per_page=100&after=${new Date().getFullYear()}-01-01T00:00:00`,
+		`/wp-json/wp/v2/event?per_page=100&after=${new Date().getFullYear()}-01-01T00:00:00`,
 		{
 			method: "GET"
 		}

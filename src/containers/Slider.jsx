@@ -9,8 +9,9 @@ import Container from "components/Container";
 const SliderWrapper = styled.div`
 	position: relative;
 	height: 300px;
+	max-height: 25vh;
 
-	background-image: url("/img/machine-red-blue.svg");
+	background-image: url("img/machine-red-blue.svg");
 	background-position: 50% 40%;
 	background-size: 80% auto;
 	background-repeat: no-repeat;
@@ -39,6 +40,8 @@ const Logo = styled.img`
 	left: 1rem;
 
 	width: 20rem;
+	max-width: 90%;
+
 	z-index: 10;
 `;
 
@@ -47,7 +50,7 @@ class Slider extends React.PureComponent {
 		return (
 			<SliderWrapper>
 				<Container>
-					<Logo src="/img/logo-full-white.svg" />
+					<Logo src="img/logo-full-white.svg" />
 				</Container>
 			</SliderWrapper>
 		);

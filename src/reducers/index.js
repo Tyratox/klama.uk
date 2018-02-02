@@ -99,6 +99,22 @@ import post, * as fromPost from "./post";
 export const getPostById = wrap(fromPost.getPostById, state => state.post);
 export const getPosts = wrap(fromPost.getPosts, state => state.post);
 
+import event, * as fromEvent from "./event";
+
+export const getEventById = wrap(fromEvent.getEventById, state => state.event);
+export const getEvents = wrap(fromEvent.getEvents, state => state.event);
+
+import eventType, * as fromEventType from "./event-type";
+
+export const getEventTypeById = wrap(
+	fromEventType.getEventTypeById,
+	state => state.eventType
+);
+export const getEventTypes = wrap(
+	fromEventType.getEventTypes,
+	state => state.eventType
+);
+
 export default combineReducers({
 	routing: routerReducer,
 	burgerMenu,
@@ -106,5 +122,7 @@ export default combineReducers({
 	authentication,
 	attachment,
 	page,
-	post
+	post,
+	event,
+	eventType
 });

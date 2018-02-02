@@ -48,7 +48,7 @@ export const fetch = pageSlug => dispatch => {
 	return fetchApi(`/wp-json/wp/v2/pages?slug=${pageSlug}`, {
 		method: "GET"
 	})
-		.then(items => {
+		.then(({ json: items }) => {
 			if (items.length > 0) {
 				dispatch(fetchItem(true, null, pageSlug, mapItem(items[0])));
 			} else {

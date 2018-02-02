@@ -63,7 +63,9 @@ class Header extends React.PureComponent {
 					<Container>
 						<Flexbar>
 							<NavItem>
-								<img width="155" height="222" src="/img/logo-blue.svg" />
+								<Link to="/">
+									<img width="155" height="222" src="img/logo-blue.svg" />
+								</Link>
 							</NavItem>
 							<Push left>
 								<MediaQuery md up>
@@ -81,11 +83,11 @@ class Header extends React.PureComponent {
 											onClick={() => {
 												window.location =
 													"mailto:" +
-													"ofni"
+													"siul"
 														.split("")
 														.reverse()
 														.join("") +
-													"@klama.uk";
+													"@luishartl.ch";
 											}}
 										>
 											Kontakt

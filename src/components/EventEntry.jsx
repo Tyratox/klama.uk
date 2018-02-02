@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import Wrapper from "components/Wrapper";
 import Page from "components/Page";
+import Link from "components/Link";
 import Container from "components/Container";
 import { Flex, Box } from "grid-styled";
 
@@ -17,6 +18,9 @@ const EventWrapper = styled.div`
 	h2 {
 		margin: 0;
 		font-size: 3.5rem;
+
+		hyphens: auto;
+		line-height: 1;
 	}
 `;
 
@@ -28,13 +32,12 @@ const DAYS = ["SO", "MO", "DI", "MI", "DO", "FR", "SA"];
 
 class Event extends React.PureComponent {
 	render = () => {
-		const { title, type, description, location, date: timestamp } = this.props;
-		const date = new Date(timestamp);
+		const { title, slug, type, description, location, date } = this.props;
 
 		return (
 			<EventWrapper>
 				<Container>
-					<Flex>
+					<Flex wrap>
 						<Box width={[1, 1, 1 / 6, 1 / 6]} pr={2}>
 							{DAYS[date.getDay()]}
 							<DateComponent>
@@ -54,7 +57,9 @@ class Event extends React.PureComponent {
 								.padStart(2, "0")}
 						</Box>
 						<Box width={[1, 1, 3 / 6, 3 / 6]} pr={2}>
-							<h2>{title}</h2>
+							<h2>
+								<Link to={"/event/" + slug}>{title}</Link>
+							</h2>
 							<p>
 								{type} – {description}
 							</p>
@@ -71,10 +76,11 @@ class Event extends React.PureComponent {
 
 Event.propTypes = {
 	title: PropTypes.string.isRequired,
+	slug: PropTypes.string.isRequired,
 	type: PropTypes.string.isRequired,
 	description: PropTypes.string.isRequired,
 	location: PropTypes.string.isRequired,
-	date: PropTypes.number.isRequired
+	date: PropTypes.instanceOf(Date).isRequired
 };
 
 export default Event;

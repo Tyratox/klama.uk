@@ -37,7 +37,7 @@ export const createFetchSingleItemThunk = (
 	return fetchApi(endpoint(itemId, args), {
 		method: "GET"
 	})
-		.then(item => {
+		.then(({ json: item }) => {
 			const mappedItem = mapItem(item);
 
 			dispatch(action(false, null, itemId, mappedItem));
@@ -80,11 +80,12 @@ export const createFetchItemsPageThunk = (
 	action,
 	endpoint,
 	mapItem = item => item
-) => (page = 1, pageTo = -1, args = {}) =>
+) => (page = 1, pageTo = -1, args = { perPage: 15 }) =>
 	fetchApi(endpoint(page, args), {
 		method: "GET"
-	}).then(items => {
-		return false;
+	}).then(({ json: items, response }) => {
+		const total = parseInt(response.headers.get("x-wp-total"));
+		const { perPage } = args;
 
 		const mappedItems = items.map(mapItem);
 		dispatch(action(false, null, mappedItems));
@@ -168,7 +169,7 @@ export const createCreateItemThunk = (
 		method: "POST",
 		body: JSON.stringify(item)
 	})
-		.then(item => {
+		.then(({ json: item }) => {
 			const mappedItem = mapItem(item);
 
 			dispatch(action(false, null, mappedItem));
@@ -216,7 +217,7 @@ export const createUpdateItemThunk = (
 			Authorization: "Bearer " + token
 		})
 	})
-		.then(item => {
+		.then(({ json: item }) => {
 			const mappedItem = mapItem(item);
 
 			dispatch(action(false, null, itemId, mappedItem));

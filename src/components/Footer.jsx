@@ -80,11 +80,11 @@ class Footer extends React.PureComponent {
 									onClick={() => {
 										window.location =
 											"mailto:" +
-											"ofni"
+											"siul"
 												.split("")
 												.reverse()
 												.join("") +
-											"@klama.uk";
+											"@luishartl.ch";
 									}}
 								>
 									<ContactIcon />Schreib uns!

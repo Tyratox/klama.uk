@@ -1,8 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
+const Dotenv = require("dotenv-webpack");
 
 process.traceDeprecation = true; //https://github.com/webpack/loader-utils/issues/56
 
@@ -22,12 +21,11 @@ module.exports = {
 	plugins: [
 		new webpack.NoEmitOnErrorsPlugin(),
 		new ExtractTextPlugin("styles.css"),
-		new HtmlWebpackPlugin({hash: true, template: 'build-template.html'}),
-        new Dotenv({
-            path: './.env', // Path to .env file (this is the default)
-            safe: true, // load .env.example (defaults to "false" which does not use dotenv-safe),
-            systemvars: true
-        })
+		new Dotenv({
+			path: "./.env", // Path to .env file (this is the default)
+			safe: true, // load .env.example (defaults to "false" which does not use dotenv-safe),
+			systemvars: true
+		})
 	],
 
 	resolve: {
@@ -62,8 +60,8 @@ module.exports = {
 							plugins: [
 								"transform-object-rest-spread",
 								"transform-class-properties",
-                                "transform-decorators-legacy",
-                                "babel-plugin-styled-components",
+								"transform-decorators-legacy",
+								"babel-plugin-styled-components"
 							]
 						}
 					}
