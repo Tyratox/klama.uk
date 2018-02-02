@@ -17,6 +17,7 @@ import { fetchAll as fetchEventTypes } from "actions/event-type";
 import { getEventById, getEventTypes } from "reducers";
 
 import { colors } from "utilities/style";
+import { formatIsoDate } from "utilities/format";
 
 const EventWrapper = styled.div`
 	padding: 1rem 0;
@@ -80,11 +81,11 @@ class Event extends React.PureComponent {
 								<tbody>
 									<tr>
 										<td>Von</td>
-										<td>{new Date(dateFrom).toLocaleString()}</td>
+										<td>{formatIsoDate(dateFrom)}</td>
 									</tr>
 									<tr>
 										<td>Bis</td>
-										<td>{new Date(dateTo).toLocaleString()}</td>
+										<td>{formatIsoDate(dateTo)}</td>
 									</tr>
 									<tr>
 										<td>Typ</td>
@@ -117,8 +118,8 @@ class Event extends React.PureComponent {
 										return (
 											<tr key={id + "-" + dateFrom}>
 												<td>{name}</td>
-												<td>{new Date(dateFrom).toLocaleString()}</td>
-												<td>{new Date(dateTo).toLocaleString()}</td>
+												<td>{formatIsoDate(dateFrom)}</td>
+												<td>{formatIsoDate(dateTo)}</td>
 											</tr>
 										);
 									})}
