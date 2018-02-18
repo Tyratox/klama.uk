@@ -2,11 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
+import { Flex, Box } from "grid-styled";
 import Container from "components/Container";
 
 import { colors } from "utilities/style";
 
 const PageWrapper = styled.div``;
+
+const Content = styled.div`
+	max-width: 50%;
+`;
 
 const PageHeader = styled.header`
 	border-bottom: ${colors.primaryLight} 5px solid;
@@ -30,7 +35,7 @@ const PageYear = styled.h1`
 
 class Page extends React.PureComponent {
 	render = () => {
-		const { title, year, children } = this.props;
+		const { title, year, children, full } = this.props;
 
 		return (
 			<PageWrapper>
@@ -44,7 +49,9 @@ class Page extends React.PureComponent {
 						</PageYear>
 					)}
 				</PageHeader>
-				{children}
+				<Container>
+					{full ? children : <Box width={[1, 1, 2 / 3, 2 / 3]}>{children}</Box>}
+				</Container>
 			</PageWrapper>
 		);
 	};
@@ -53,6 +60,7 @@ class Page extends React.PureComponent {
 Page.propTypes = {
 	title: PropTypes.string.isRequired,
 	year: PropTypes.string,
+	full: PropTypes.bool,
 	children: PropTypes.node
 };
 

@@ -30,9 +30,7 @@ class Page extends React.PureComponent {
 		return (
 			<Wrapper slider header footer>
 				<PageWrapper title={title}>
-					<Container>
-						<div dangerouslySetInnerHTML={{ __html: content }} />
-					</Container>
+					<div dangerouslySetInnerHTML={{ __html: content }} />
 				</PageWrapper>
 			</Wrapper>
 		);

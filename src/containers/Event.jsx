@@ -76,61 +76,57 @@ class Event extends React.PureComponent {
 						.getFullYear()
 						.toString()}
 				>
-					<Container>
-						<EventWrapper>
-							<h2>Infos</h2>
-							<Table firstColumn={2}>
-								<tbody>
-									<tr>
-										<td>Von</td>
-										<td>{formatIsoDate(dateFrom, false)}</td>
-									</tr>
-									<tr>
-										<td>Bis</td>
-										<td>{formatIsoDate(dateTo, false)}</td>
-									</tr>
-									<tr>
-										<td>Typ</td>
-										<td>
-											{eventTypes
-												.filter(eventType =>
-													eventTypeIds.includes(eventType.id)
-												)
-												.map(eventType => eventType.name)
-												.join(", ")}
-										</td>
-									</tr>
-									<tr>
-										<td>Ort</td>
-										<td>{location}</td>
-									</tr>
-								</tbody>
-							</Table>
-							<h2>Acts</h2>
-							<Table>
-								<thead>
-									<tr>
-										<th>Name</th>
-										<th>Von</th>
-										<th>Bis</th>
-									</tr>
-								</thead>
-								<tbody>
-									{artists.map(({ id, name, dateFrom, dateTo }) => {
-										return (
-											<tr key={id + "-" + dateFrom}>
-												<td>{name}</td>
-												<td>{formatIsoDate(dateFrom)}</td>
-												<td>{formatIsoDate(dateTo)}</td>
-											</tr>
-										);
-									})}
-								</tbody>
-							</Table>
-							<h2>Beschreibung</h2>
-							<div dangerouslySetInnerHTML={{ __html: content }} />
-						</EventWrapper>
-					</Container>
+					<EventWrapper>
+						<h2>Infos</h2>
+						<Table firstColumn={2}>
+							<tbody>
+								<tr>
+									<td>Von</td>
+									<td>{formatIsoDate(dateFrom, false)}</td>
+								</tr>
+								<tr>
+									<td>Bis</td>
+									<td>{formatIsoDate(dateTo, false)}</td>
+								</tr>
+								<tr>
+									<td>Typ</td>
+									<td>
+										{eventTypes
+											.filter(eventType => eventTypeIds.includes(eventType.id))
+											.map(eventType => eventType.name)
+											.join(", ")}
+									</td>
+								</tr>
+								<tr>
+									<td>Ort</td>
+									<td>{location}</td>
+								</tr>
+							</tbody>
+						</Table>
+						<h2>Acts</h2>
+						<Table>
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Von</th>
+									<th>Bis</th>
+								</tr>
+							</thead>
+							<tbody>
+								{artists.map(({ id, name, dateFrom, dateTo }) => {
+									return (
+										<tr key={id + "-" + dateFrom}>
+											<td>{name}</td>
+											<td>{formatIsoDate(dateFrom)}</td>
+											<td>{formatIsoDate(dateTo)}</td>
+										</tr>
+									);
+								})}
+							</tbody>
+						</Table>
+						<h2>Beschreibung</h2>
+						<div dangerouslySetInnerHTML={{ __html: content }} />
+					</EventWrapper>
 				</PageWrapper>
 			</Wrapper>
 		);

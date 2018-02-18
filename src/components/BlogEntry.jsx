@@ -46,25 +46,21 @@ class BlogEntry extends React.PureComponent {
 
 		return (
 			<Container>
-				<Flex>
-					<EntryWrapper>
-						<Box width={[1, 1, 2 / 3, 2 / 3]}>
-							<Link to={`/post/${slug}`}>
-								{thumbnailId ? <Thumbnail id={thumbnailId} /> : null}
-								<h2>{title}</h2>
-								<SmallDate>
-									{date
-										.getDate()
-										.toString()
-										.padStart(2, "0")}.
-									{(date.getMonth() + 1).toString().padStart(2, "0")}.
-									{date.getFullYear()}
-								</SmallDate>
-								<div dangerouslySetInnerHTML={{ __html: content }} />
-							</Link>
-						</Box>
-					</EntryWrapper>
-				</Flex>
+				<EntryWrapper>
+					<Link to={`/post/${slug}`}>
+						{thumbnailId ? <Thumbnail id={thumbnailId} /> : null}
+						<h2>{title}</h2>
+						<SmallDate>
+							{date
+								.getDate()
+								.toString()
+								.padStart(2, "0")}.
+							{(date.getMonth() + 1).toString().padStart(2, "0")}.
+							{date.getFullYear()}
+						</SmallDate>
+						<div dangerouslySetInnerHTML={{ __html: content }} />
+					</Link>
+				</EntryWrapper>
 			</Container>
 		);
 	};

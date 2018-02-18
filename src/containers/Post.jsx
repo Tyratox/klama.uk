@@ -35,11 +35,9 @@ class Post extends React.PureComponent {
 		return (
 			<Wrapper slider header footer>
 				<PageWrapper title={title}>
-					<Container>
-						<PostWrapper>
-							<div dangerouslySetInnerHTML={{ __html: content }} />
-						</PostWrapper>
-					</Container>
+					<PostWrapper>
+						<div dangerouslySetInnerHTML={{ __html: content }} />
+					</PostWrapper>
 				</PageWrapper>
 			</Wrapper>
 		);

@@ -27,7 +27,7 @@ class Feed extends React.PureComponent {
 		return (
 			<div>
 				<Wrapper slider header footer>
-					<Page title="Events" year={new Date().getFullYear().toString()}>
+					<Page title="Events" year={new Date().getFullYear().toString()} full>
 						{events.map(
 							({
 								id,
