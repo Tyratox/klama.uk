@@ -10,6 +10,8 @@ import BlogEntry from "components/BlogEntry";
 import { fetchLatest } from "actions/post";
 import { getPosts } from "reducers";
 
+import { isoToDate } from "utilities/format";
+
 class Feed extends React.PureComponent {
 	componentWillMount = () => {
 		const { fetchLatest } = this.props;
@@ -24,7 +26,7 @@ class Feed extends React.PureComponent {
 					{posts.map(({ id, title, slug, excerpt, date, thumbnailId }) => (
 						<BlogEntry
 							key={id}
-							date={new Date(date)}
+							date={isoToDate(date)}
 							title={title}
 							slug={slug}
 							content={excerpt}

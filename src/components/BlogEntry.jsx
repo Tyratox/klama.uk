@@ -35,9 +35,6 @@ const EntryWrapper = styled(Container)`
 	}
 `;
 
-const BigDate = styled.time`
-	font-size: 2rem;
-`;
 const SmallDate = styled.time`
 	margin: 0.5rem 0;
 	display: block;
@@ -53,13 +50,6 @@ class BlogEntry extends React.PureComponent {
 					<EntryWrapper>
 						<Box width={[1, 1, 2 / 3, 2 / 3]}>
 							<Link to={`/post/${slug}`}>
-								<BigDate>
-									{date
-										.getDate()
-										.toString()
-										.padStart(2, "0")}.
-									{(date.getMonth() + 1).toString().padStart(2, "0")}.
-								</BigDate>
 								{thumbnailId ? <Thumbnail id={thumbnailId} /> : null}
 								<h2>{title}</h2>
 								<SmallDate>

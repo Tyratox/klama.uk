@@ -11,6 +11,8 @@ import { fetchLatest } from "actions/event";
 import { fetchAll as fetchAllEventTypes } from "actions/event-type";
 import { getEvents, getEventTypes } from "reducers";
 
+import { isoToDate } from "utilities/format";
+
 class Feed extends React.PureComponent {
 	componentWillMount = () => {
 		const { fetchLatest, fetchAllEventTypes } = this.props;
@@ -38,7 +40,7 @@ class Feed extends React.PureComponent {
 							}) => (
 								<Event
 									key={id}
-									date={new Date(dateFrom)}
+									date={isoToDate(dateFrom)}
 									title={title}
 									slug={slug}
 									type={eventTypes

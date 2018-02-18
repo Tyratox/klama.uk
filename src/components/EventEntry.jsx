@@ -16,7 +16,7 @@ const EventWrapper = styled.div`
 	color: ${colors.primary};
 
 	h2 {
-		margin: 0;
+		margin: 1rem 0 0 0;
 		font-size: 3.5rem;
 
 		hyphens: auto;
@@ -24,7 +24,7 @@ const EventWrapper = styled.div`
 	}
 
 	p {
-		margin-top: 1.35rem;
+		margin-top: 0.35rem;
 	}
 `;
 

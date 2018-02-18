@@ -17,7 +17,7 @@ import { fetchAll as fetchEventTypes } from "actions/event-type";
 import { getEventById, getEventTypes } from "reducers";
 
 import { colors } from "utilities/style";
-import { formatIsoDate } from "utilities/format";
+import { formatIsoDate, isoToDate } from "utilities/format";
 
 const EventWrapper = styled.div`
 	padding: 1rem 0;
@@ -72,7 +72,9 @@ class Event extends React.PureComponent {
 			<Wrapper slider header footer>
 				<PageWrapper
 					title={title}
-					year={new Date(dateFrom).getFullYear().toString()}
+					year={isoToDate(dateFrom)
+						.getFullYear()
+						.toString()}
 				>
 					<Container>
 						<EventWrapper>
@@ -118,8 +120,8 @@ class Event extends React.PureComponent {
 										return (
 											<tr key={id + "-" + dateFrom}>
 												<td>{name}</td>
-												<td>{formatIsoDate(dateFrom, false)}</td>
-												<td>{formatIsoDate(dateTo, false)}</td>
+												<td>{formatIsoDate(dateFrom)}</td>
+												<td>{formatIsoDate(dateTo)}</td>
 											</tr>
 										);
 									})}

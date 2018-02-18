@@ -1,51 +1,47 @@
 export const formatIsoDate = (
-	string,
+	string, //2018-06-16T22:00:00+00:00
 	day = true,
 	hours = true,
 	minutes = true,
 	seconds = false
 ) => {
-	const d = new Date(string);
 	let date = "";
 
+	const y = string.substr(0, 4),
+		m = string.substr(5, 2),
+		d = string.substr(8, 2),
+		h = string.substr(11, 2),
+		mi = string.substr(14, 2),
+		s = string.substr(17, 2);
+
 	if (day) {
-		date +=
-			d
-				.getDate()
-				.toString()
-				.padStart(2, "0") +
-			"." +
-			(d.getMonth() + 1).toString().padStart(2, "0") +
-			"." +
-			d.getFullYear();
+		date += d + "." + m + "." + y;
 	}
 
 	if (hours) {
-		date +=
-			(day ? ", " : "") +
-			d
-				.getHours()
-				.toString()
-				.padStart(2, "0");
+		date += (day ? ", " : "") + h;
 
 		if (minutes) {
-			date +=
-				":" +
-				d
-					.getMinutes()
-					.toString()
-					.padStart(2, "0");
+			date += ":" + mi;
 
 			if (seconds) {
-				date +=
-					":" +
-					d
-						.getSeconds()
-						.toString()
-						.padStart(2, "0");
+				date += ":" + s;
 			}
 		}
 	}
 
 	return date;
+};
+
+export const isoToDate = string => {
+	let date = "";
+
+	const y = parseInt(string.substr(0, 4)),
+		m = parseInt(string.substr(5, 2)),
+		d = parseInt(string.substr(8, 2)),
+		h = parseInt(string.substr(11, 2)),
+		mi = parseInt(string.substr(14, 2)),
+		s = parseInt(string.substr(17, 2));
+
+	return new Date(y, m - 1, d, h, mi, s);
 };
