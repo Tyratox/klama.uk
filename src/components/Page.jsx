@@ -9,7 +9,7 @@ import { colors } from "utilities/style";
 const PageWrapper = styled.div``;
 
 const PageHeader = styled.header`
-	border-bottom: ${colors.primary} 5px solid;
+	border-bottom: ${colors.primaryLight} 5px solid;
 	/*position: sticky;
 	top: 4rem;*/
 `;
@@ -17,14 +17,14 @@ const PageTitle = styled.h1`
 	padding: 0.5rem 0;
 	margin: 0;
 
-	background-color: ${colors.primary};
+	background-color: ${colors.primaryLight};
 	color: ${colors.primaryContrast};
 `;
 const PageYear = styled.h1`
 	padding: 0.5rem 0;
 	margin: 0;
 
-	background-color: ${colors.accent};
+	background-color: ${colors.accentLight};
 	color: ${colors.primaryContrast};
 `;
 

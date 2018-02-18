@@ -13,7 +13,7 @@ import { colors } from "utilities/style";
 
 const StyledWrapper = styled.div`
 	min-height: 100vh;
-	background-color: ${colors.background};
+	background-color: #fff;
 
 	display: flex;
 	flex-direction: column;

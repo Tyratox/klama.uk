@@ -13,7 +13,7 @@ import FacebookIcon from "react-icons/lib/io/social-facebook";
 import ContactIcon from "react-icons/lib/io/android-chat";
 
 const FooterWrapper = styled.footer`
-	background-color: ${colors.primary};
+	background-color: ${colors.primaryLight};
 	color: #fff;
 	padding: 1rem 0;
 `;

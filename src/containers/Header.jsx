@@ -41,7 +41,7 @@ const HeaderWrapper = styled.div`
 	z-index: 100;
 
 	background-color: ${colors.primaryContrast};
-	color: ${colors.primary};
+	color: ${colors.primaryLight};
 `;
 
 class Header extends React.PureComponent {

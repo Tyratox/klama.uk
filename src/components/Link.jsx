@@ -14,7 +14,7 @@ const UnstyledLink = styled.div`
 	cursor: pointer;
 
 	color: ${({ negative }) =>
-		negative ? colors.primaryContrast : colors.primary};
+		negative ? colors.primaryContrast : colors.primaryLight};
 `;
 
 const StyledLink = styled(UnstyledLink)`

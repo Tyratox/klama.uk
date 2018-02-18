@@ -22,6 +22,10 @@ const EventWrapper = styled.div`
 		hyphens: auto;
 		line-height: 1;
 	}
+
+	p {
+		margin-top: 1.35rem;
+	}
 `;
 
 const DateComponent = styled.div`
@@ -47,7 +51,6 @@ class Event extends React.PureComponent {
 									.padStart(2, "0")}.
 								{(date.getMonth() + 1).toString().padStart(2, "0")}.
 							</DateComponent>
-							<br />
 							{date
 								.getHours()
 								.toString()

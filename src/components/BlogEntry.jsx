@@ -15,10 +15,15 @@ import { colors, shadows } from "utilities/style";
 
 const EntryWrapper = styled(Container)`
 	margin: 1rem auto;
-	padding: 1rem;
-	color: ${colors.primary};
+	padding: 0;
+
+	color: ${colors.primaryLight};
 	background-color: ${colors.backgroundContrast};
-	box-shadow: ${shadows.y};
+
+	& > div {
+		box-shadow: ${shadows.y};
+		padding: 1rem;
+	}
 
 	h2 {
 		margin: 0.5rem 0 0 0;
@@ -43,9 +48,9 @@ class BlogEntry extends React.PureComponent {
 		const { title, slug, content, thumbnailId, date } = this.props;
 
 		return (
-			<EntryWrapper>
-				<Container>
-					<Flex>
+			<Container>
+				<Flex>
+					<EntryWrapper>
 						<Box width={[1, 1, 2 / 3, 2 / 3]}>
 							<Link to={`/post/${slug}`}>
 								<BigDate>
@@ -55,7 +60,7 @@ class BlogEntry extends React.PureComponent {
 										.padStart(2, "0")}.
 									{(date.getMonth() + 1).toString().padStart(2, "0")}.
 								</BigDate>
-								<Thumbnail id={thumbnailId} />
+								{thumbnailId ? <Thumbnail id={thumbnailId} /> : null}
 								<h2>{title}</h2>
 								<SmallDate>
 									{date
@@ -68,9 +73,9 @@ class BlogEntry extends React.PureComponent {
 								<div dangerouslySetInnerHTML={{ __html: content }} />
 							</Link>
 						</Box>
-					</Flex>
-				</Container>
-			</EntryWrapper>
+					</EntryWrapper>
+				</Flex>
+			</Container>
 		);
 	};
 }

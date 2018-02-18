@@ -32,7 +32,7 @@ const Table = styled.table`
 
 	thead th {
 		padding: 0.5rem 0.5rem 0.5rem 0.25rem;
-		background-color: ${colors.primary};
+		background-color: ${colors.primaryLight};
 		color: #fff;
 		text-align: left;
 	}
@@ -81,11 +81,11 @@ class Event extends React.PureComponent {
 								<tbody>
 									<tr>
 										<td>Von</td>
-										<td>{formatIsoDate(dateFrom)}</td>
+										<td>{formatIsoDate(dateFrom, false)}</td>
 									</tr>
 									<tr>
 										<td>Bis</td>
-										<td>{formatIsoDate(dateTo)}</td>
+										<td>{formatIsoDate(dateTo, false)}</td>
 									</tr>
 									<tr>
 										<td>Typ</td>
@@ -118,8 +118,8 @@ class Event extends React.PureComponent {
 										return (
 											<tr key={id + "-" + dateFrom}>
 												<td>{name}</td>
-												<td>{formatIsoDate(dateFrom)}</td>
-												<td>{formatIsoDate(dateTo)}</td>
+												<td>{formatIsoDate(dateFrom, false)}</td>
+												<td>{formatIsoDate(dateTo, false)}</td>
 											</tr>
 										);
 									})}
