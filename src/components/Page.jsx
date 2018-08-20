@@ -49,9 +49,14 @@ class Page extends React.PureComponent {
 						</PageYear>
 					)}
 				</PageHeader>
-				<Container>
-					{full ? children : <Box width={[1, 1, 2 / 3, 2 / 3]}>{children}</Box>}
-				</Container>
+
+				{full ? (
+					children
+				) : (
+					<Container>
+						<Box width={[1, 1, 2 / 3, 2 / 3]}>{children}</Box>
+					</Container>
+				)}
 			</PageWrapper>
 		);
 	};
