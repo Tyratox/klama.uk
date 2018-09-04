@@ -1,128 +1,133 @@
 const path = require("path");
+const ChildProcess = require("child_process");
+
 const webpack = require("webpack");
-const Dotenv = require('dotenv-webpack');
+const Dotenv = require("dotenv-webpack");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+const VERSION = ChildProcess.execSync("git rev-parse HEAD")
+  .toString()
+  .trim();
 
 process.traceDeprecation = true; //https://github.com/webpack/loader-utils/issues/56
 
 const context = __dirname;
 
 module.exports = {
-	context,
+  mode: "development",
 
-	entry: [
-		"react-hot-loader/patch",
-		/*"webpack-hot-middleware/client",*/
-		path.join(context, "src/index.jsx")
-	],
+  context,
 
-	output: {
-		path: path.join(context, "build/"),
-		filename: "bundle.js",
-		publicPath: "/build"
-	},
+  entry: [
+    "react-hot-loader/patch",
+    /*"webpack-hot-middleware/client",*/
+    path.join(context, "src/index.jsx")
+  ],
 
-	devtool: "inline-source-map",
-	devServer: {
-		contentBase: ".",
-		hot: true,
-		historyApiFallback: true
-	},
+  output: {
+    path: path.join(context, "build/"),
+    filename: "bundle.js",
+    publicPath: "/"
+  },
 
-	plugins: [
-		new webpack.NamedModulesPlugin(),
-		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NoEmitOnErrorsPlugin(),
-        new Dotenv({
-            path: './.env', // Path to .env file (this is the default)
-            safe: true, // load .env.example (defaults to "false" which does not use dotenv-safe)
-			systemvars: true
-        })
-		/*new webpack.ProvidePlugin({
-			// make fetch available
-			$: "jquery",
-			jQuery: "jquery",
-			Tether: "tether",
-			"window.Tether": "tether",
-			fetch: "isomorphic-fetch"
-		})*/
-	],
+  devtool: "inline-source-map",
+  devServer: {
+    contentBase: ".",
+    hot: true,
+    historyApiFallback: true
+  },
 
-	resolve: {
-		modules: [
-			path.resolve(context, "src"),
-			path.resolve(context, "node_modules")
-		],
-		extensions: [".js", ".jsx", ".css", ".scss"]
-	},
+  plugins: [
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+    new Dotenv({
+      path: "./.env", // Path to .env file (this is the default)
+      safe: true, // load .env.example (defaults to "false" which does not use dotenv-safe)
+      systemvars: true
+    }),
+    new BundleAnalyzerPlugin(),
+    new HtmlWebpackPlugin({
+      title: "Klamauk",
+      template: "index.ejs",
+      version: VERSION
+    })
+  ],
 
-	module: {
-		rules: [
-			{
-				test: /\.jsx?$/,
-				include: [path.resolve(context, "src")],
+  resolve: {
+    modules: [
+      path.resolve(context, "src"),
+      path.resolve(context, "node_modules")
+    ],
+    extensions: [".js", ".jsx", ".css", ".scss"]
+  },
 
-				use: [
-					{
-						loader: "react-hot-loader/webpack"
-					},
-					{
-						loader: "babel-loader",
-						options: {
-							presets: [
-								[
-									"env",
-									{
-										modules: false,
-										targets: {
-											browsers: ["> 1%", "last 2 major versions", "IE 10"]
-										}
-									}
-								],
-								"react"
-							],
-							plugins: [
-								"transform-object-rest-spread",
-								"transform-class-properties",
-								"transform-decorators-legacy",
-								"babel-plugin-styled-components",
-								"react-hot-loader/babel"
-							]
-						}
-					}
-				]
-			},
-			{
-				test: /\.css$/,
-				include: [
-					path.resolve(context, "src"),
-					path.resolve(context, "node_modules")
-				],
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        include: [path.resolve(context, "src")],
 
-				use: [
-					"style-loader",
-					{ loader: "css-loader", options: { import: false, sourceMap: true } },
-					{ loader: "postcss-loader", options: { sourceMap: true } }
-				]
-			},
-			{
-				test: /\.scss$/,
-				include: [
-					path.resolve(context, "src"),
-					path.resolve(context, "node_modules")
-				],
+        use: [
+          {
+            loader: "babel-loader",
+            options: {
+              presets: [
+                [
+                  "@babel/preset-env",
+                  {
+                    modules: false,
+                    targets: {
+                      browsers: ["> 1%", "last 2 major versions", "IE 10"]
+                    }
+                  }
+                ],
+                "@babel/preset-react"
+              ],
+              plugins: [
+                "babel-plugin-styled-components",
+                ["@babel/plugin-proposal-class-properties", { loose: false }],
+                "@babel/plugin-proposal-object-rest-spread",
+                "react-hot-loader/babel"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        test: /\.css$/,
+        include: [
+          path.resolve(context, "src"),
+          path.resolve(context, "node_modules")
+        ],
 
-				use: [
-					"style-loader",
-					{ loader: "css-loader", options: { import: false, sourceMap: true } },
-					{ loader: "postcss-loader", options: { sourceMap: true } },
-					"resolve-url-loader",
-					{ loader: "sass-loader", options: { sourceMap: true } }
-				]
-			},
-			{
-				test: /\.woff2?$/,
-				loader: "file-loader"
-			}
-		]
-	}
+        use: [
+          "style-loader",
+          { loader: "css-loader", options: { import: false, sourceMap: true } },
+          { loader: "postcss-loader", options: { sourceMap: true } }
+        ]
+      },
+      {
+        test: /\.scss$/,
+        include: [
+          path.resolve(context, "src"),
+          path.resolve(context, "node_modules")
+        ],
+
+        use: [
+          "style-loader",
+          { loader: "css-loader", options: { import: false, sourceMap: true } },
+          { loader: "postcss-loader", options: { sourceMap: true } },
+          "resolve-url-loader",
+          { loader: "sass-loader", options: { sourceMap: true } }
+        ]
+      },
+      {
+        test: /\.(woff2?|png|jp(e*)g|svg)$/,
+        loader: "file-loader"
+      }
+    ]
+  }
 };

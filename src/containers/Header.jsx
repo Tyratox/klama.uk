@@ -3,13 +3,14 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
+import { Helmet } from "react-helmet";
 
 import { colors } from "utilities/style";
 
 import {
-	getHeaderNavbarCollapse,
-	getAuthenticatedUser,
-	getAuthenticatedUserFetching
+  getHeaderNavbarCollapse,
+  getAuthenticatedUser,
+  getAuthenticatedUserFetching
 } from "reducers";
 
 import { action as toggleBurgerMenuAction } from "redux-burger-menu";
@@ -26,121 +27,141 @@ import Flexbar from "components/Flexbar";
 import Push from "components/Push";
 import MediaQuery from "components/MediaQuery";
 import NavItem from "components/NavItem";
+import LogoBlue from "../../img/logo-blue.svg";
 
 import MenuIcon from "react-icons/lib/md/menu";
 
 const PreUser = styled.div`
-	margin-left: auto;
-	flex-grow: 1;
+  margin-left: auto;
+  flex-grow: 1;
 `;
 
 const HeaderWrapper = styled.div`
-	position: sticky;
-	top: 0;
+  position: sticky;
+  top: 0;
 
-	z-index: 100;
+  z-index: 100;
 
-	background-color: ${colors.primaryContrast};
-	color: ${colors.primaryLight};
+  background-color: ${colors.primaryContrast};
+  color: ${colors.primaryLight};
 `;
 
 class Header extends React.PureComponent {
-	render = () => {
-		const {
-			isNavbarOpen,
-			isBurgerMenuOpen,
-			toggleNavbar,
-			toggleBurgerMenu,
-			user: { username },
-			fetchingUser,
-			logout,
-			preUser
-		} = this.props;
+  render = () => {
+    const {
+      isNavbarOpen,
+      isBurgerMenuOpen,
+      toggleNavbar,
+      toggleBurgerMenu,
+      user: { username },
+      fetchingUser,
+      logout,
+      preUser
+    } = this.props;
 
-		return (
-			<HeaderWrapper>
-				<Navbar>
-					<Container>
-						<Flexbar>
-							<NavItem>
-								<Link to="/">
-									<img width="155" height="222" src="/img/logo-blue.svg" />
-								</Link>
-							</NavItem>
-							<Push left>
-								<MediaQuery md up>
-									<NavItem>
-										<Link to="/">Events</Link>
-									</NavItem>
-									<NavItem>
-										<Link to="/blog">Blog</Link>
-									</NavItem>
-									<NavItem>
-										<Link to="/page/about">Verein</Link>
-									</NavItem>
-									<NavItem>
-										<Link
-											onClick={() => {
-												window.location =
-													"mailto:" +
-													"siul"
-														.split("")
-														.reverse()
-														.join("") +
-													"@luishartl.ch";
-											}}
-										>
-											Kontakt
-										</Link>
-									</NavItem>
-								</MediaQuery>
-								<MediaQuery md down>
-									<NavItem onClick={toggleBurgerMenu}>
-										<MenuIcon size="25" />
-									</NavItem>
-								</MediaQuery>
-							</Push>
-						</Flexbar>
-					</Container>
-				</Navbar>
-			</HeaderWrapper>
-		);
-	};
+    return (
+      <HeaderWrapper>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <meta name="author" content="Nico Hauser" />
+          <meta name="format-detection" content="telephone=no" />
+
+          <title>Klamauk - Aarauer Kulturverein</title>
+          <meta
+            name="description"
+            content="Klamauk ist ein Aarauer Kulturverein der regelmässig eigene Events organisiert und bei anderen mithilft."
+          />
+        </Helmet>
+        <Navbar>
+          <Container>
+            <Flexbar>
+              <NavItem>
+                <Link to="/">
+                  <img width="155" height="222" src={LogoBlue} />
+                </Link>
+              </NavItem>
+              <Push left>
+                <MediaQuery md up>
+                  <NavItem>
+                    <Link to="/">Events</Link>
+                  </NavItem>
+                  <NavItem>
+                    <Link to="/blog">Blog</Link>
+                  </NavItem>
+                  <NavItem>
+                    <Link to="/page/about">Verein</Link>
+                  </NavItem>
+                  <NavItem>
+                    <Link
+                      onClick={() => {
+                        window.location =
+                          "mailto:" +
+                          "siul"
+                            .split("")
+                            .reverse()
+                            .join("") +
+                          "@luishartl.ch";
+                      }}
+                    >
+                      Kontakt
+                    </Link>
+                  </NavItem>
+                </MediaQuery>
+                <MediaQuery md down>
+                  <NavItem onClick={toggleBurgerMenu}>
+                    <MenuIcon size="25" />
+                  </NavItem>
+                </MediaQuery>
+              </Push>
+            </Flexbar>
+          </Container>
+        </Navbar>
+      </HeaderWrapper>
+    );
+  };
 }
 
 Header.propTypes = {
-	preUser: PropTypes.node
+  preUser: PropTypes.node
 };
 
 const mapStateToProps = state => ({
-	isNavbarOpen: !getHeaderNavbarCollapse(state),
-	isBurgerMenuOpen: getBurgerMenuOpen(state),
-	user: getAuthenticatedUser(state) || {},
-	fetchingUser: getAuthenticatedUserFetching(state)
+  isNavbarOpen: !getHeaderNavbarCollapse(state),
+  isBurgerMenuOpen: getBurgerMenuOpen(state),
+  user: getAuthenticatedUser(state) || {},
+  fetchingUser: getAuthenticatedUserFetching(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-	toggleNavbar() {
-		return dispatch(toggleHeaderNavbarCollapse());
-	},
-	toggleBurgerMenu(open) {
-		return dispatch(toggleBurgerMenuAction(open));
-	},
-	logout() {
-		dispatch(resetJwtToken());
-		dispatch(push("/login"));
-	}
+  toggleNavbar() {
+    return dispatch(toggleHeaderNavbarCollapse());
+  },
+  toggleBurgerMenu(open) {
+    return dispatch(toggleBurgerMenuAction(open));
+  },
+  logout() {
+    dispatch(resetJwtToken());
+    dispatch(push("/login"));
+  }
 });
 
 const mergeProps = (mapStateToProps, mapDispatchToProps, ownProps) => ({
-	...mapStateToProps,
-	...mapDispatchToProps,
-	...ownProps,
-	toggleBurgerMenu() {
-		return mapDispatchToProps.toggleBurgerMenu(
-			!mapStateToProps.isBurgerMenuOpen
-		);
-	}
+  ...mapStateToProps,
+  ...mapDispatchToProps,
+  ...ownProps,
+  toggleBurgerMenu() {
+    return mapDispatchToProps.toggleBurgerMenu(
+      !mapStateToProps.isBurgerMenuOpen
+    );
+  }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Header);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps
+)(Header);

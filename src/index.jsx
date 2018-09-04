@@ -35,38 +35,32 @@ const history = createHistory();
 
 //and the redux store
 const store = createStore(
-	reducers,
-	persistedState,
-	composeWithDevTools(
-		applyMiddleware(thunkMiddleware, routerMiddleware(history))
-	)
+  reducers,
+  persistedState,
+  composeWithDevTools(
+    applyMiddleware(thunkMiddleware, routerMiddleware(history))
+  )
 );
 
 //storing some keys of the application state in the localstorage
 store.subscribe(
-	throttle(() => {
-		const { authentication } = store.getState();
+  throttle(() => {
+    const { authentication } = store.getState();
 
-		saveState({
-			authentication
-		});
-	}, 1000)
+    saveState({
+      authentication
+    });
+  }, 1000)
 );
 
 const render = Component => {
-	ReactDOM.render(
-		<AppContainer>
-			<App history={history} store={store} />
-		</AppContainer>,
-		document.getElementById("root")
-	);
+  ReactDOM.render(
+    <AppContainer>
+      <App history={history} store={store} />
+    </AppContainer>,
+    document.getElementById("root")
+  );
 };
 
 //do the initial render
 render(App);
-
-if (module.hot) {
-	module.hot.accept("App", () => {
-		render(App);
-	});
-}

@@ -1,8 +1,8 @@
 import {
-	createFetchSingleItemAction,
-	createFetchSingleItemThunk,
-	createFetchAllItemsAction,
-	createFetchAllItemsThunk
+  createFetchSingleItemAction,
+  createFetchSingleItemThunk,
+  createFetchAllItemsAction,
+  createFetchAllItemsThunk
 } from "utilities/action";
 
 import { fetchApi } from "utilities/api";
@@ -15,41 +15,43 @@ export const itemName = "event";
  * @return {object} The mapped item
  */
 export const mapItem = ({
-	id,
-	slug,
-	date,
-	title: { rendered: title },
-	content: { rendered: content },
-	excerpt: { rendered: excerpt },
-	acf: {
-		short_description: description,
-		artists,
-		location,
-		date_from: dateFrom,
-		date_to: dateTo
-	},
-	event_type: eventTypeIds,
-	featured_media: thumbnailId
+  id,
+  slug,
+  date,
+  title: { rendered: title },
+  content: { rendered: content },
+  excerpt: { rendered: excerpt },
+  acf: {
+    short_description: description,
+    artists,
+    location,
+    date_from: dateFrom,
+    date_to: dateTo
+  },
+  event_type: eventTypeIds,
+  featured_media: thumbnailId
 }) => ({
-	id,
-	slug,
-	date,
-	title,
-	content,
-	excerpt,
-	artists: artists.map(
-		({
-			date_from: dateFrom,
-			date_to: dateTo,
-			artist: { id, post_title: name }
-		}) => ({ id, name, dateFrom, dateTo })
-	),
-	description,
-	location,
-	dateFrom,
-	dateTo,
-	eventTypeIds,
-	thumbnailId
+  id,
+  slug,
+  date,
+  title,
+  content,
+  excerpt,
+  artists: artists
+    ? artists.map(
+        ({
+          date_from: dateFrom,
+          date_to: dateTo,
+          artist: { id, post_title: name }
+        }) => ({ id, name, dateFrom, dateTo })
+      )
+    : [],
+  description,
+  location,
+  dateFrom,
+  dateTo,
+  eventTypeIds,
+  thumbnailId
 });
 
 /**
@@ -67,21 +69,21 @@ export const fetchItem = createFetchSingleItemAction(itemName);
  * @return {function} The redux thunk
  */
 export const fetch = eventSlug => dispatch => {
-	dispatch(fetchItem(true, null, eventSlug));
+  dispatch(fetchItem(true, null, eventSlug));
 
-	return fetchApi(`/wp-json/wp/v2/event?slug=${eventSlug}`, {
-		method: "GET"
-	})
-		.then(({ json: items }) => {
-			if (items.length > 0) {
-				dispatch(fetchItem(false, null, eventSlug, mapItem(items[0])));
-			} else {
-				dispatch(fetchItem(false, new Error("No event was found"), eventSlug));
-			}
-		})
-		.catch(err => {
-			dispatch(fetchItem(true, err, eventSlug));
-		});
+  return fetchApi(`/wp-json/wp/v2/event?slug=${eventSlug}`, {
+    method: "GET"
+  })
+    .then(({ json: items }) => {
+      if (items.length > 0) {
+        dispatch(fetchItem(false, null, eventSlug, mapItem(items[0])));
+      } else {
+        dispatch(fetchItem(false, new Error("No event was found"), eventSlug));
+      }
+    })
+    .catch(err => {
+      dispatch(fetchItem(true, err, eventSlug));
+    });
 };
 
 /**
@@ -94,18 +96,18 @@ export const fetch = eventSlug => dispatch => {
 export const fetchItems = createFetchAllItemsAction(itemName);
 
 export const fetchLatest = () => dispatch => {
-	dispatch(fetchItems(true, null));
+  dispatch(fetchItems(true, null));
 
-	return fetchApi(
-		`/wp-json/wp/v2/event?per_page=100&after=${new Date().getFullYear()}-01-01T00:00:00`,
-		{
-			method: "GET"
-		}
-	)
-		.then(({ json: items }) => {
-			dispatch(fetchItems(false, null, items.map(mapItem)));
-		})
-		.catch(err => {
-			dispatch(fetchItems(true, err));
-		});
+  return fetchApi(
+    `/wp-json/wp/v2/event?per_page=100&after=${new Date().getFullYear()}-01-01T00:00:00`,
+    {
+      method: "GET"
+    }
+  )
+    .then(({ json: items }) => {
+      dispatch(fetchItems(false, null, items.map(mapItem)));
+    })
+    .catch(err => {
+      dispatch(fetchItems(true, err));
+    });
 };
