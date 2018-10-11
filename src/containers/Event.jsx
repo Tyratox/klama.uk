@@ -12,7 +12,7 @@ import { fetchAll as fetchEventTypes } from "actions/event-type";
 import { getEventById, getEventTypes } from "reducers";
 
 import { colors } from "utilities/style";
-import { formatIsoDate, isoToDate } from "utilities/format";
+import { formatIsoDate } from "utilities/format";
 
 const EventWrapper = styled.div`
   padding: 1rem 0;
@@ -68,12 +68,7 @@ class Event extends React.PureComponent {
         <Helmet>
           <title>Klamauk - {title}</title>
         </Helmet>
-        <PageWrapper
-          title={title}
-          year={isoToDate(dateFrom)
-            .getFullYear()
-            .toString()}
-        >
+        <PageWrapper title={title} year={dateFrom.getFullYear().toString()}>
           <EventWrapper>
             <h2>Infos</h2>
             <Table firstColumn={2}>

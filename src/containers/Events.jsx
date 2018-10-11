@@ -11,8 +11,6 @@ import { fetchLatest } from "actions/event";
 import { fetchAll as fetchAllEventTypes } from "actions/event-type";
 import { getEvents, getEventTypes } from "reducers";
 
-import { isoToDate } from "utilities/format";
-
 class Feed extends React.PureComponent {
   componentDidMount = () => {
     const { fetchLatest, fetchAllEventTypes, events, eventTypes } = this.props;
@@ -25,37 +23,54 @@ class Feed extends React.PureComponent {
     }
   };
 
+  mapEvent = (
+    { id, title, slug, description, dateFrom, location, eventTypeIds = [] },
+    eventTypes
+  ) => (
+    <Event
+      key={id}
+      date={dateFrom}
+      title={title}
+      slug={slug}
+      type={eventTypes
+        .filter(eventType => eventTypeIds.includes(eventType.id))
+        .map(eventType => eventType.name)
+        .join(", ")}
+      description={description}
+      location={location}
+    />
+  );
+
   render = () => {
     const { events, eventTypes } = this.props;
+
+    const upcoming = [];
+    const past = [];
+    const now = new Date();
+
+    events.forEach(event => {
+      if (event.dateTo > now) {
+        upcoming.push(event);
+      } else {
+        past.push(event);
+      }
+    });
+
+    //ascending
+    upcoming.sort((a, b) => a.dateFrom.getTime() - b.dateFrom.getTime());
+    //descending
+    past.sort((a, b) => a.dateFrom.getTime() - b.dateFrom.getTime());
 
     return (
       <div>
         <Wrapper slider header footer>
           <Page title="Events" year={new Date().getFullYear().toString()} full>
-            {events.map(
-              ({
-                id,
-                title,
-                slug,
-                description,
-                dateFrom,
-                location,
-                eventTypeIds = []
-              }) => (
-                <Event
-                  key={id}
-                  date={isoToDate(dateFrom)}
-                  title={title}
-                  slug={slug}
-                  type={eventTypes
-                    .filter(eventType => eventTypeIds.includes(eventType.id))
-                    .map(eventType => eventType.name)
-                    .join(", ")}
-                  description={description}
-                  location={location}
-                />
-              )
-            )}
+            {upcoming.map(e => this.mapEvent(e, eventTypes))}
+            <Container>
+              <hr />
+              <h2>Vergangene</h2>
+            </Container>
+            {past.map(e => this.mapEvent(e, eventTypes))}
           </Page>
         </Wrapper>
       </div>

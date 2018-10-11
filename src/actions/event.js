@@ -6,6 +6,7 @@ import {
 } from "utilities/action";
 
 import { fetchApi } from "utilities/api";
+import { isoToDate } from "../utilities/format";
 
 export const itemName = "event";
 
@@ -40,16 +41,16 @@ export const mapItem = ({
   artists: artists
     ? artists.map(
         ({
-          date_from: dateFrom,
-          date_to: dateTo,
+          date_from: dateFrom_,
+          date_to: dateTo_,
           artist: { id, post_title: name }
-        }) => ({ id, name, dateFrom, dateTo })
+        }) => ({ id, name, dateFrom: isoToDate(dateFrom_), dateTo: isoToDate(dateTo_) })
       )
     : [],
   description,
   location,
-  dateFrom,
-  dateTo,
+  dateFrom: isoToDate(dateFrom),
+  dateTo: isoToDate(dateTo),
   eventTypeIds,
   thumbnailId
 });

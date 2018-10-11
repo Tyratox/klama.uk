@@ -1,11 +1,12 @@
 import {
-	createFetchSingleItemAction,
-	createFetchSingleItemThunk,
-	createFetchAllItemsAction,
-	createFetchAllItemsThunk
+  createFetchSingleItemAction,
+  createFetchSingleItemThunk,
+  createFetchAllItemsAction,
+  createFetchAllItemsThunk
 } from "utilities/action";
 
 import { fetchApi } from "utilities/api";
+import { isoToDate } from "../utilities/format";
 
 export const itemName = "post";
 
@@ -15,21 +16,21 @@ export const itemName = "post";
  * @return {object} The mapped item
  */
 export const mapItem = ({
-	id,
-	slug,
-	date,
-	title: { rendered: title },
-	content: { rendered: content },
-	excerpt: { rendered: excerpt },
-	featured_media: thumbnailId
+  id,
+  slug,
+  date,
+  title: { rendered: title },
+  content: { rendered: content },
+  excerpt: { rendered: excerpt },
+  featured_media: thumbnailId
 }) => ({
-	id,
-	slug,
-	date,
-	title,
-	content,
-	excerpt,
-	thumbnailId
+  id,
+  slug,
+  date: isoToDate(date),
+  title,
+  content,
+  excerpt,
+  thumbnailId
 });
 
 /**
@@ -47,21 +48,21 @@ export const fetchItem = createFetchSingleItemAction(itemName);
  * @return {function} The redux thunk
  */
 export const fetch = postSlug => dispatch => {
-	dispatch(fetchItem(true, null, postSlug));
+  dispatch(fetchItem(true, null, postSlug));
 
-	return fetchApi(`/wp-json/wp/v2/posts?slug=${postSlug}`, {
-		method: "GET"
-	})
-		.then(({ json: items }) => {
-			if (items.length > 0) {
-				dispatch(fetchItem(false, null, postSlug, mapItem(items[0])));
-			} else {
-				dispatch(fetchItem(false, new Error("No post was found"), postSlug));
-			}
-		})
-		.catch(err => {
-			dispatch(fetchItem(true, err, postSlug));
-		});
+  return fetchApi(`/wp-json/wp/v2/posts?slug=${postSlug}`, {
+    method: "GET"
+  })
+    .then(({ json: items }) => {
+      if (items.length > 0) {
+        dispatch(fetchItem(false, null, postSlug, mapItem(items[0])));
+      } else {
+        dispatch(fetchItem(false, new Error("No post was found"), postSlug));
+      }
+    })
+    .catch(err => {
+      dispatch(fetchItem(true, err, postSlug));
+    });
 };
 
 /**
@@ -74,18 +75,18 @@ export const fetch = postSlug => dispatch => {
 export const fetchItems = createFetchAllItemsAction(itemName);
 
 export const fetchLatest = postSlug => dispatch => {
-	dispatch(fetchItems(true, null));
+  dispatch(fetchItems(true, null));
 
-	return fetchApi(
-		`/wp-json/wp/v2/posts?per_page=100&after=${new Date().getFullYear()}-01-01T00:00:00`,
-		{
-			method: "GET"
-		}
-	)
-		.then(({ json: items }) => {
-			dispatch(fetchItems(false, null, items.map(mapItem)));
-		})
-		.catch(err => {
-			dispatch(fetchItems(true, err));
-		});
+  return fetchApi(
+    `/wp-json/wp/v2/posts?per_page=100&after=${new Date().getFullYear()}-01-01T00:00:00`,
+    {
+      method: "GET"
+    }
+  )
+    .then(({ json: items }) => {
+      dispatch(fetchItems(false, null, items.map(mapItem)));
+    })
+    .catch(err => {
+      dispatch(fetchItems(true, err));
+    });
 };
