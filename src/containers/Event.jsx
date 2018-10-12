@@ -16,6 +16,7 @@ import { formatIsoDate } from "utilities/format";
 
 const EventWrapper = styled.div`
   padding: 1rem 0;
+  word-break: break-word;
 `;
 
 const Table = styled.table`
@@ -54,8 +55,8 @@ class Event extends React.PureComponent {
       event: {
         title = "",
         content = "",
-        dateFrom = "",
-        dateTo = "",
+        dateFrom,
+        dateTo,
         location = "",
         artists = [],
         eventTypeIds = []
@@ -68,7 +69,10 @@ class Event extends React.PureComponent {
         <Helmet>
           <title>Klamauk - {title}</title>
         </Helmet>
-        <PageWrapper title={title} year={dateFrom.getFullYear().toString()}>
+        <PageWrapper
+          title={title}
+          year={dateFrom && dateFrom.getFullYear().toString()}
+        >
           <EventWrapper>
             <h2>Infos</h2>
             <Table firstColumn={2}>
