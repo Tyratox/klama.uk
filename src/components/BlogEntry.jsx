@@ -20,6 +20,8 @@ const EntryWrapper = styled(Container)`
   color: ${colors.primaryLight};
   background-color: ${colors.backgroundContrast};
 
+  word-break: break-word;
+
   & > div {
     box-shadow: ${shadows.y};
     padding: 1rem;

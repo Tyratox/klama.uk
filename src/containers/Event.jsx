@@ -16,7 +16,6 @@ import { formatIsoDate } from "utilities/format";
 
 const EventWrapper = styled.div`
   padding: 1rem 0;
-  word-break: break-word;
 `;
 
 const Table = styled.table`
