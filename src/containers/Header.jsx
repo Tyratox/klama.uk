@@ -104,7 +104,7 @@ class Header extends React.PureComponent {
                             .split("")
                             .reverse()
                             .join("") +
-                          "@luishartl.ch";
+                          "@klama.uk";
                       }}
                     >
                       Kontakt
