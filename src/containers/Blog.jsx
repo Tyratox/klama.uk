@@ -28,16 +28,31 @@ class Feed extends React.PureComponent {
           />
         </Helmet>
         <Page title="Blog" year={new Date().getFullYear().toString()}>
-          {posts.map(({ id, title, slug, excerpt, date, thumbnailId }) => (
-            <BlogEntry
-              key={id}
-              date={date}
-              title={title}
-              slug={slug}
-              content={excerpt}
-              thumbnailId={thumbnailId}
-            />
-          ))}
+          {posts
+            .sort((a, b) => b.date.getTime() - a.date.getTime())
+            .map(
+              ({
+                id,
+                title,
+                slug,
+                excerpt,
+                date,
+                thumbnailId,
+                thumbnailUrl,
+                instagram
+              }) => (
+                <BlogEntry
+                  key={id}
+                  date={date}
+                  title={title}
+                  slug={slug}
+                  content={excerpt}
+                  thumbnailId={thumbnailId}
+                  thumbnailUrl={thumbnailUrl}
+                  instagram={instagram}
+                />
+              )
+            )}
         </Page>
       </Wrapper>
     );

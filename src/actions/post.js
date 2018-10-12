@@ -30,7 +30,27 @@ export const mapItem = ({
   title,
   content,
   excerpt,
-  thumbnailId
+  thumbnailId,
+  thumbnailUrl: null,
+  instagram: false
+});
+
+const mapInstagramItem = ({
+  id,
+  taken_at_timestamp: timestamp,
+  display_url: thumbnailUrl,
+  edge_media_to_caption: { edges },
+  shortcode
+}) => ({
+  id,
+  slug: shortcode,
+  date: new Date(timestamp * 1000),
+  title: "",
+  content: "",
+  excerpt: `<div><p>${edges[0] && edges[0].node.text}</p></div>`,
+  thumbnailId: null,
+  thumbnailUrl,
+  instagram: true
 });
 
 /**
@@ -74,19 +94,31 @@ export const fetch = postSlug => dispatch => {
  */
 export const fetchItems = createFetchAllItemsAction(itemName);
 
-export const fetchLatest = postSlug => dispatch => {
+export const fetchLatest = () => dispatch => {
   dispatch(fetchItems(true, null));
 
-  return fetchApi(
-    `/wp-json/wp/v2/posts?per_page=100&after=${new Date().getFullYear()}-01-01T00:00:00`,
-    {
+  return Promise.all([
+    fetchApi(
+      `/wp-json/wp/v2/posts?per_page=100&after=${new Date().getFullYear()}-01-01T00:00:00`,
+      {
+        method: "GET"
+      }
+    )
+      .then(({ json: items }) => {
+        dispatch(fetchItems(false, null, items.map(mapItem)));
+      })
+      .catch(err => {
+        dispatch(fetchItems(true, err));
+      }),
+    fetchApi(`/instagram/klamauker/klamauker.json`, {
       method: "GET"
-    }
-  )
-    .then(({ json: items }) => {
-      dispatch(fetchItems(false, null, items.map(mapItem)));
     })
-    .catch(err => {
-      dispatch(fetchItems(true, err));
-    });
+      .then(({ json: items }) => {
+        console.log(items, items.map(mapInstagramItem));
+        dispatch(fetchItems(false, null, items.map(mapInstagramItem)));
+      })
+      .catch(err => {
+        dispatch(fetchItems(true, err));
+      })
+  ]);
 };
