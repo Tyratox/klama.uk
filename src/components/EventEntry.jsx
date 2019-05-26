@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { push } from "react-router-redux";
 
 import Wrapper from "components/Wrapper";
 import Page from "components/Page";
@@ -14,6 +15,17 @@ import { colors } from "utilities/style";
 const EventWrapper = styled.div`
   padding: 1rem;
   color: ${colors.primary};
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    color: ${colors.backgroundContrast};
+    background-color: ${colors.primaryLight};
+
+    h2 {
+      color: #fff;
+    }
+  }
 
   h2 {
     margin: 1rem 0 0 0;
@@ -21,10 +33,6 @@ const EventWrapper = styled.div`
 
     hyphens: auto;
     line-height: 1;
-
-    &:hover {
-      text-decoration: underline;
-    }
   }
 
   p {
@@ -40,10 +48,22 @@ const DAYS = ["SO", "MO", "DI", "MI", "DO", "FR", "SA"];
 
 class Event extends React.PureComponent {
   render = () => {
-    const { title, slug, type, description, location, date } = this.props;
+    const {
+      title,
+      slug,
+      type,
+      description,
+      location,
+      date,
+      dispatch
+    } = this.props;
 
     return (
-      <EventWrapper>
+      <EventWrapper
+        onClick={() => {
+          dispatch(push("/event/" + slug));
+        }}
+      >
         <Container>
           <Flex wrap>
             <Box width={[1, 1, 1 / 6, 1 / 6]} pr={2}>
@@ -66,9 +86,7 @@ class Event extends React.PureComponent {
                 .padStart(2, "0")}
             </Box>
             <Box width={[1, 1, 3 / 6, 3 / 6]} pr={2}>
-              <h2>
-                <Link to={"/event/" + slug}>{title}</Link>
-              </h2>
+              <h2>{title}</h2>
               <p>
                 {type} – {description}
               </p>
@@ -92,4 +110,4 @@ Event.propTypes = {
   date: PropTypes.instanceOf(Date).isRequired
 };
 
-export default Event;
+export default connect()(Event);

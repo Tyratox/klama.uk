@@ -100,7 +100,7 @@ export const fetchLatest = () => dispatch => {
   dispatch(fetchItems(true, null));
 
   return fetchApi(
-    `/wp-json/wp/v2/event?per_page=100&after=${new Date().getFullYear()}-01-01T00:00:00`,
+    `/wp-json/wp/v2/event?per_page=100`,
     {
       method: "GET"
     }

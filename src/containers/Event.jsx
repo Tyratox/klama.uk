@@ -115,8 +115,8 @@ class Event extends React.PureComponent {
                       return (
                         <tr key={id + "-" + dateFrom}>
                           <td>{name}</td>
-                          <td>{formatIsoDate(dateFrom)}</td>
-                          <td>{formatIsoDate(dateTo)}</td>
+                          <td>{formatIsoDate(dateFrom, false)}</td>
+                          <td>{formatIsoDate(dateTo, false)}</td>
                         </tr>
                       );
                     })}
