@@ -1,7 +1,7 @@
 {
   "name": "klamauk-frontend",
   "version": "1.0.0",
-  "description": "Website of Klamauk",
+  "description": "",
   "main": "src/index.js",
   "author": "Tyratox (Nico Hauser)",
   "license": "UNLICENSED",
